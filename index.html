@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rupiyo App</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#f1f5f9;
+ font-family:Arial,sans-serif;color:#172033;
+}
+header{
+ background:#5425c7;color:white;
+ padding:25px 20px;border-radius:0 0 25px 25px;
+}
+header h1{margin:0;font-size:28px}
+header p{margin:7px 0 0;opacity:.85}
+.container{padding:18px;max-width:500px;margin:auto}
+.balance{
+ background:linear-gradient(135deg,#673de0,#39209b);
+ color:white;padding:24px;border-radius:20px;
+ margin-top:18px;
+}
+.balance small{opacity:.8}
+.balance h2{font-size:35px;margin:12px 0}
+.actions{
+ display:grid;grid-template-columns:repeat(3,1fr);
+ gap:12px;margin:22px 0;
+}
+.action{
+ background:white;padding:18px 5px;
+ text-align:center;border-radius:15px;
+ font-weight:bold;font-size:14px;
+}
+.action span{display:block;font-size:25px;margin-bottom:8px}
+h3{margin-top:25px}
+.card{
+ background:white;padding:16px;
+ border-radius:14px;margin:12px 0;
+}
+input{
+ width:100%;padding:14px;margin:8px 0;
+ border:1px solid #ddd;border-radius:10px;
+ font-size:16px;
+}
+button{
+ width:100%;padding:14px;border:0;
+ border-radius:10px;background:#5425c7;
+ color:white;font-size:16px;font-weight:bold;
+}
+.note{font-size:12px;color:#64748b;text-align:center}
+</style>
+</head>
+<body>
+
+<header>
+<h1>₹ Rupiyo</h1>
+<p>Your Digital Money Companion</p>
+</header>
+
+<div class="container">
+
+<div class="balance">
+<small>Demo Wallet Balance</small>
+<h2 id="balance">₹5,000.00</h2>
+<p>Rupiyo Wallet</p>
+</div>
+
+<div class="actions">
+<div class="action" onclick="show('send')">
+<span>💸</span>Send Money
+</div>
+<div class="action" onclick="show('qr')">
+<span>▦</span>QR Code
+</div>
+<div class="action" onclick="show('history')">
+<span>📃</span>History
+</div>
+</div>
+
+<div id="send" class="card">
+<h3>Send Demo Money</h3>
+<input id="name" placeholder="Receiver Name">
+<input id="amount" type="number" placeholder="Amount ₹">
+<button onclick="sendMoney()">Send Demo Money</button>
+<p class="note">Demo only. No real money is transferred.</p>
+</div>
+
+<div id="qr" class="card" style="display:none">
+<h3>My Demo QR</h3>
+<div style="font-size:75px;text-align:center">▦</div>
+<p style="text-align:center">RUPIYO-DEMO-001</p>
+<p class="note">This is not a real payment QR.</p>
+</div>
+
+<div id="history" class="card">
+<h3>Transaction History</h3>
+<div id="transactions">No transactions yet.</div>
+</div>
+
+<div class="card">
+<h3>My Profile</h3>
+<p>Name: Rupiyo User</p>
+<p>UPI ID: demo@rupiyo</p>
+<p>Account: Demo Wallet</p>
+</div>
+
+<p class="note">Rupiyo is a demonstration project, not a banking or payment service.</p>
+</div>
+
+<script>
+let balance = 5000;
+let transactions = [];
+
+function show(id){
+ document.getElementById(id).style.display='block';
+ if(id!=='send'){
+  document.getElementById('send').style.display='none';
+ }
+ if(id!=='qr'){
+  document.getElementById('qr').style.display='none';
+ }
+ if(id!=='history'){
+  document.getElementById('history').style.display='none';
+ }
+}
+
+function sendMoney(){
+ let name=document.getElementById('name').value.trim();
+ let amount=Number(document.getElementById('amount').value);
+
+ if(!name || !amount || amount<=0){
+  alert('Please enter valid details');
+  return;
+ }
+ if(amount>balance){
+  alert('Insufficient demo balance');
+  return;
+ }
+
+ balance-=amount;
+ document.getElementById('balance').innerText=
+ '₹'+balance.toFixed(2);
+
+ transactions.unshift(name+' — ₹'+amount.toFixed(2));
+ document.getElementById('transactions').innerHTML=
+ transactions.map(t=>'<p>💸 '+t+'</p>').join('');
+
+ document.getElementById('name').value='';
+ document.getElementById('amount').value='';
+ alert('Demo transaction successful!');
+ show('history');
+}
+</script>
+</body>
+</html>
