@@ -3,155 +3,179 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rupiyo App</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rupiyo - Digital Wallet</title>
 <style>
 *{box-sizing:border-box}
-body{
- margin:0;background:#f1f5f9;
- font-family:Arial,sans-serif;color:#172033;
-}
-header{
- background:#5425c7;color:white;
- padding:25px 20px;border-radius:0 0 25px 25px;
-}
-header h1{margin:0;font-size:28px}
-header p{margin:7px 0 0;opacity:.85}
-.container{padding:18px;max-width:500px;margin:auto}
-.balance{
- background:linear-gradient(135deg,#673de0,#39209b);
- color:white;padding:24px;border-radius:20px;
- margin-top:18px;
-}
+body{margin:0;background:#f4f5fb;color:#20223a;font-family:Arial,sans-serif}
+header{background:linear-gradient(135deg,#4c20c5,#8255ed);color:white;padding:25px 20px 35px;border-radius:0 0 25px 25px}
+.logo{font-size:28px;font-weight:bold}
+header p{opacity:.8;margin-bottom:0}
+main{max-width:480px;margin:auto;padding:18px}
+.card{background:white;border-radius:18px;padding:20px;margin-bottom:17px;box-shadow:0 5px 20px #2221}
+.balance{background:linear-gradient(135deg,#6939dc,#39209b);color:white;padding:24px;border-radius:20px;margin-bottom:20px}
 .balance small{opacity:.8}
-.balance h2{font-size:35px;margin:12px 0}
-.actions{
- display:grid;grid-template-columns:repeat(3,1fr);
- gap:12px;margin:22px 0;
-}
-.action{
- background:white;padding:18px 5px;
- text-align:center;border-radius:15px;
- font-weight:bold;font-size:14px;
-}
-.action span{display:block;font-size:25px;margin-bottom:8px}
-h3{margin-top:25px}
-.card{
- background:white;padding:16px;
- border-radius:14px;margin:12px 0;
-}
-input{
- width:100%;padding:14px;margin:8px 0;
- border:1px solid #ddd;border-radius:10px;
- font-size:16px;
-}
-button{
- width:100%;padding:14px;border:0;
- border-radius:10px;background:#5425c7;
- color:white;font-size:16px;font-weight:bold;
-}
-.note{font-size:12px;color:#64748b;text-align:center}
+.balance h1{font-size:34px;margin:12px 0}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+.action{background:white;border-radius:15px;padding:17px 5px;text-align:center;font-size:13px;font-weight:bold;cursor:pointer}
+.action span{display:block;font-size:27px;margin-bottom:8px}
+h3{margin-top:0}
+input{width:100%;padding:14px;border:1px solid #ddd;border-radius:11px;margin:8px 0;font-size:15px}
+button{background:#6333d5;color:white;border:0;border-radius:11px;padding:14px;width:100%;font-size:15px;font-weight:bold;cursor:pointer}
+.secondary{background:#eee9ff;color:#5425c7}
+.row{display:flex;justify-content:space-between;align-items:center;padding:13px 0;border-bottom:1px solid #eee;font-size:14px}
+.muted{color:#8990a5;font-size:12px}
+.green{color:#15965a}
+nav{position:sticky;bottom:0;background:white;display:flex;justify-content:space-around;padding:13px 5px;box-shadow:0 -3px 15px #0001}
+nav button{width:auto;background:none;color:#555;padding:8px;font-size:12px}
+nav button.active{color:#6333d5}
+.page{display:none}
+.page.active{display:block}
+.qr{font-size:100px;text-align:center;padding:20px}
+.note{font-size:12px;color:#8a6a25;background:#fff4d7;padding:12px;border-radius:10px}
 </style>
 </head>
 <body>
 
 <header>
-<h1>₹ Rupiyo</h1>
-<p>Your Digital Money Companion</p>
+<div class="logo">₹ Rupiyo</div>
+<p>Your Money, Your Control.</p>
 </header>
 
-<div class="container">
-
+<main>
+<div class="page active" id="home">
 <div class="balance">
-<small>Demo Wallet Balance</small>
-<h2 id="balance">₹5,000.00</h2>
-<p>Rupiyo Wallet</p>
+<small>DEMO WALLET BALANCE</small>
+<h1 id="balance">₹5,000.00</h1>
+<div>Welcome to Rupiyo Wallet</div>
 </div>
 
 <div class="actions">
-<div class="action" onclick="show('send')">
-<span>💸</span>Send Money
-</div>
-<div class="action" onclick="show('qr')">
-<span>▦</span>QR Code
-</div>
-<div class="action" onclick="show('history')">
-<span>📃</span>History
-</div>
-</div>
-
-<div id="send" class="card">
-<h3>Send Demo Money</h3>
-<input id="name" placeholder="Receiver Name">
-<input id="amount" type="number" placeholder="Amount ₹">
-<button onclick="sendMoney()">Send Demo Money</button>
-<p class="note">Demo only. No real money is transferred.</p>
-</div>
-
-<div id="qr" class="card" style="display:none">
-<h3>My Demo QR</h3>
-<div style="font-size:75px;text-align:center">▦</div>
-<p style="text-align:center">RUPIYO-DEMO-001</p>
-<p class="note">This is not a real payment QR.</p>
-</div>
-
-<div id="history" class="card">
-<h3>Transaction History</h3>
-<div id="transactions">No transactions yet.</div>
+<div class="action" onclick="openPage('send')"><span>💸</span>Send</div>
+<div class="action" onclick="openPage('receive')"><span>📥</span>Receive</div>
+<div class="action" onclick="openPage('history')"><span>📃</span>History</div>
 </div>
 
 <div class="card">
-<h3>My Profile</h3>
-<p>Name: Rupiyo User</p>
-<p>UPI ID: demo@rupiyo</p>
-<p>Account: Demo Wallet</p>
+<h3>Account Overview</h3>
+<div class="row"><span>Wallet Type</span><b>Demo Wallet</b></div>
+<div class="row"><span>Account Status</span><b class="green">Demo Active</b></div>
+<div class="row"><span>Currency</span><b>INR ₹</b></div>
 </div>
 
-<p class="note">Rupiyo is a demonstration project, not a banking or payment service.</p>
+<div class="card">
+<h3>Recent Activity</h3>
+<div id="recent" class="muted">No transactions yet</div>
 </div>
+</div>
+
+<div class="page" id="send">
+<div class="card">
+<h3>💸 Send Demo Money</h3>
+<input id="receiver" placeholder="Receiver name">
+<input id="amount" type="number" placeholder="Enter amount ₹">
+<button onclick="sendMoney()">Send Demo Money</button>
+<p class="note">This is a demo wallet. No real money is transferred.</p>
+</div>
+</div>
+
+<div class="page" id="receive">
+<div class="card">
+<h3>📥 Receive Money</h3>
+<div class="qr">▦</div>
+<p style="text-align:center">RUPIYO-DEMO-001</p>
+<p class="muted" style="text-align:center">Sample QR display only</p>
+</div>
+</div>
+
+<div class="page" id="history">
+<div class="card">
+<h3>📃 Transaction History</h3>
+<div id="allTransactions">No transactions yet</div>
+</div>
+</div>
+
+<div class="page" id="profile">
+<div class="card">
+<h3>👤 My Profile</h3>
+<input id="profileName" placeholder="Enter your name">
+<button onclick="saveProfile()">Save Profile</button>
+<div class="row"><span>Name</span><b id="displayName">Rupiyo User</b></div>
+<div class="row"><span>Wallet</span><b>Demo Wallet</b></div>
+<div class="row"><span>UPI</span><b>demo@rupiyo</b></div>
+</div>
+</div>
+</main>
+
+<nav>
+<button class="active" onclick="openPage('home',this)">🏠 Home</button>
+<button onclick="openPage('send',this)">💸 Send</button>
+<button onclick="openPage('history',this)">📃 History</button>
+<button onclick="openPage('profile',this)">👤 Profile</button>
+</nav>
 
 <script>
-let balance = 5000;
-let transactions = [];
+let balance=5000;
+let transactions=[];
 
-function show(id){
- document.getElementById(id).style.display='block';
- if(id!=='send'){
-  document.getElementById('send').style.display='none';
- }
- if(id!=='qr'){
-  document.getElementById('qr').style.display='none';
- }
- if(id!=='history'){
-  document.getElementById('history').style.display='none';
- }
+function openPage(id,btn){
+ document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+ document.getElementById(id).classList.add('active');
+ document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+ if(btn)btn.classList.add('active');
+}
+
+function updateBalance(){
+ document.getElementById('balance').textContent=
+ '₹'+balance.toLocaleString('en-IN',{minimumFractionDigits:2});
 }
 
 function sendMoney(){
- let name=document.getElementById('name').value.trim();
+ let name=document.getElementById('receiver').value.trim();
  let amount=Number(document.getElementById('amount').value);
-
- if(!name || !amount || amount<=0){
-  alert('Please enter valid details');
+ if(!name||!Number.isFinite(amount)||amount<=0){
+  alert('Enter valid details');
   return;
  }
  if(amount>balance){
   alert('Insufficient demo balance');
   return;
  }
-
  balance-=amount;
- document.getElementById('balance').innerText=
- '₹'+balance.toFixed(2);
-
- transactions.unshift(name+' — ₹'+amount.toFixed(2));
- document.getElementById('transactions').innerHTML=
- transactions.map(t=>'<p>💸 '+t+'</p>').join('');
-
- document.getElementById('name').value='';
+ transactions.unshift({name,amount,date:new Date().toLocaleString()});
+ updateBalance();
+ renderHistory();
+ document.getElementById('receiver').value='';
  document.getElementById('amount').value='';
- alert('Demo transaction successful!');
- show('history');
+ alert('Demo transaction completed!');
+ openPage('history');
+}
+
+function renderHistory(){
+ let html=transactions.map(t=>
+ '<div class="row"><span>'+escapeHTML(t.name)+
+ '<br><small class="muted">'+t.date+
+ '</small></span><b style="color:#d44">-₹'+
+ t.amount.toFixed(2)+'</b></div>'
+ ).join('');
+ document.getElementById('allTransactions').innerHTML=
+ html||'No transactions yet';
+ document.getElementById('recent').innerHTML=
+ html||'No transactions yet';
+}
+
+function escapeHTML(s){
+ return s.replace(/[&<>"']/g,c=>({
+ '&':'&amp;','<':'&lt;','>':'&gt;',
+ '"':'&quot;',"'":'&#39;'
+ })[c]);
+}
+
+function saveProfile(){
+ let name=document.getElementById('profileName').value.trim();
+ if(!name){alert('Enter your name');return;}
+ document.getElementById('displayName').textContent=name;
+ alert('Demo profile updated!');
 }
 </script>
 </body>
