@@ -4,95 +4,102 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#102f3b">
 <title>Rupiyo Wallet</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#f2f6f7;color:#142b35;font-family:Arial,sans-serif}
-header{background:#102f3b;color:white;padding:23px 20px;border-radius:0 0 23px 23px}
+header{background:linear-gradient(130deg,#102f3b,#087e78);color:white;padding:23px 20px 27px;border-radius:0 0 25px 25px}
+.top{display:flex;justify-content:space-between;align-items:center}
 .brand{font-size:27px;font-weight:800;letter-spacing:.5px}
 .brand span{color:#38d6bc}
 header p{margin:6px 0 0;color:#c6dcdd;font-size:13px}
-main{max-width:480px;margin:auto;padding:17px 15px 90px}
-.card{background:white;padding:18px;border-radius:17px;margin:14px 0;box-shadow:0 4px 16px #173a4410}
+main{max-width:480px;margin:auto;padding:17px 15px 100px}
+.card{background:white;padding:18px;border-radius:18px;margin:14px 0;box-shadow:0 5px 20px #173a440c;animation:up .3s ease}
+@keyframes up{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
 h2{font-size:20px;margin:5px 0 14px}
-h3{font-size:16px}
-input{width:100%;padding:14px;margin:7px 0;border:1px solid #dce5e7;border-radius:10px;font-size:15px}
-button{border:0;background:#087e78;color:white;padding:14px;border-radius:11px;width:100%;font-weight:bold;font-size:15px;margin-top:9px}
+h3{font-size:16px;margin:5px 0}
+input,select{width:100%;padding:14px;margin:7px 0;border:1px solid #dce5e7;border-radius:11px;font-size:15px;background:white}
+button{border:0;background:#087e78;color:white;padding:14px;border-radius:11px;width:100%;font-weight:bold;font-size:15px;margin-top:9px;cursor:pointer}
+button:active,.tile:active{transform:scale(.97)}
 .light{background:#e4f5f2;color:#12665e}
-.small{font-size:12px;color:#71838a;line-height:1.5}
+.dark{background:#102f3b}
 .hidden{display:none!important}
-.wallet{background:linear-gradient(135deg,#103744,#087e78);color:white;padding:22px;border-radius:19px;margin:16px 0}
-.wallet h1{font-size:34px;margin:12px 0}
+.small{font-size:12px;color:#71838a;line-height:1.5}
+.wallet{background:linear-gradient(135deg,#103744,#087e78);color:white;padding:23px;border-radius:21px;margin:17px 0;box-shadow:0 9px 22px #087e7830}
+.wallet h1{font-size:35px;margin:12px 0}
 .wallet p{margin:0;color:#d1eeee}
-.section-title{font-size:17px;font-weight:bold;margin:20px 3px 10px}
+.section-title{font-size:17px;font-weight:bold;margin:22px 3px 12px}
 .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:9px}
-.tile{background:white;padding:14px 3px;border-radius:14px;text-align:center;font-size:12px;font-weight:bold;box-shadow:0 3px 12px #00000008}
-.tile b{display:block;font-size:23px;margin-bottom:8px;color:#087e78}
+.tile{background:white;padding:15px 3px;border-radius:15px;text-align:center;font-size:11px;font-weight:bold;box-shadow:0 3px 12px #00000008;cursor:pointer;transition:.2s}
+.tile b{display:block;font-size:24px;margin-bottom:8px;color:#087e78}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .item{padding:13px 0;border-bottom:1px solid #edf0f1;font-size:14px}
-nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -3px 15px #0001;max-width:480px;margin:auto}
-nav button{background:white;color:#52646b;padding:8px 3px;margin:0;font-size:11px}
+nav{position:fixed;bottom:0;left:0;right:0;background:white;display:flex;justify-content:space-around;padding:10px 3px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -3px 15px #0001;max-width:480px;margin:auto;z-index:5}
+nav button{background:white;color:#71838a;padding:8px 3px;margin:0;font-size:11px}
 nav button b{display:block;font-size:20px;margin-bottom:4px}
 nav button.active{color:#087e78}
 .amount{font-weight:bold;color:#087e78}
+.notice{background:#e4f5f2;border-radius:12px;padding:13px;margin:10px 0;font-size:13px}
+.qr{width:190px;height:190px;border:9px solid #087e78;border-radius:17px;margin:20px auto;background:repeating-conic-gradient(#102f3b 0% 25%,white 0% 50%) 50%/18px 18px;position:relative}
+.qr:after{content:"₹";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:white;color:#087e78;font-size:30px;font-weight:bold;padding:8px;border-radius:8px}
+.pill{background:#e4f5f2;color:#087e78;padding:7px 12px;border-radius:20px;font-size:12px;font-weight:bold}
+.empty{text-align:center;color:#71838a;padding:20px 5px;font-size:13px}
+a{color:#087e78;text-decoration:none;font-weight:bold}
 </style>
 </head>
 <body>
 
 <header>
+<div class="top">
 <div class="brand">₹ <span>RUPIYO</span></div>
+<div onclick="page('notifications')" style="font-size:23px;cursor:pointer">🔔</div>
+</div>
 <p>Your money. Your control.</p>
 </header>
 
 <main>
-
-<!-- REGISTER -->
 <section id="register">
 <div class="card">
-<h2>Welcome to Rupiyo</h2>
-<p class="small">Create your demo profile to explore Rupiyo.</p>
+<h2>Welcome to Rupiyo 👋</h2>
+<p class="small">Create your demo profile.</p>
 <input id="regName" placeholder="Full Name">
 <input id="regMobile" placeholder="Demo mobile number" maxlength="10" inputmode="numeric">
 <input id="regCity" placeholder="City">
 <input id="regPin" placeholder="Create demo PIN (4 digits)" maxlength="4" inputmode="numeric">
 <button onclick="register()">Create Demo Account</button>
-<p class="small">Use fictional details only. This demo does not verify phone numbers, send OTPs, or create a real financial account.</p>
+<p class="small">Fictional details only. This is not a real financial account.</p>
 <p style="text-align:center">Already registered? <a href="#" onclick="showLogin()">Login</a></p>
 </div>
 </section>
 
-<!-- LOGIN -->
 <section id="login" class="hidden">
 <div class="card">
 <h2>Login to Rupiyo</h2>
-<input id="loginMobile" placeholder="Demo mobile number" maxlength="10" inputmode="numeric">
-<input id="loginPin" placeholder="Demo PIN" maxlength="4" inputmode="numeric">
+<input id="loginMobile" placeholder="Demo mobile number" maxlength="10">
+<input id="loginPin" placeholder="Demo PIN" maxlength="4">
 <button onclick="login()">Login</button>
 <p style="text-align:center">New user? <a href="#" onclick="showRegister()">Create account</a></p>
-<p class="small">Demo login only. Do not use a real banking PIN.</p>
+<p class="small">Demo login only. Never use your real banking PIN.</p>
 </div>
 </section>
 
-<!-- HOME -->
 <section id="home" class="hidden">
 <div class="row">
 <div>Namaste, <b id="homeName">User</b> 👋</div>
-<div onclick="page('profile')">👤</div>
+<span class="pill">DEMO ACCOUNT</span>
 </div>
-
 <div class="wallet">
-<p>Demo Wallet Balance</p>
+<p>Available Demo Balance</p>
 <h1 id="balance">₹5,000</h1>
-<p>Rupiyo Demo Account</p>
+<p>Rupiyo Wallet • Simulated funds</p>
 </div>
-
 <div class="grid">
 <div class="tile" onclick="page('send')"><b>↗</b>Send Money</div>
 <div class="tile" onclick="page('receive')"><b>↓</b>Receive</div>
 <div class="tile" onclick="page('scan')"><b>▦</b>Scan QR</div>
 <div class="tile" onclick="page('history')"><b>▤</b>History</div>
 </div>
-
 <div class="section-title">Manage Payments</div>
 <div class="grid">
 <div class="tile" onclick="page('contacts')"><b>♙</b>Contacts</div>
@@ -100,19 +107,18 @@ nav button.active{color:#087e78}
 <div class="tile" onclick="page('rewards')"><b>🎁</b>Rewards</div>
 <div class="tile" onclick="page('profile')"><b>⚙</b>Profile</div>
 </div>
-
 <div class="card">
 <div class="row"><h3>Recent Transactions</h3><a href="#" onclick="page('history')">See all</a></div>
-<div id="recent">No transactions yet.</div>
+<div id="recent"></div>
 </div>
+<div class="notice">💡 Rupiyo Demo: All balances and transfers are simulated.</div>
 </section>
 
-<!-- SEND -->
 <section id="send" class="hidden">
 <div class="card">
-<h2>Send Money</h2>
+<h2>↗ Send Money</h2>
 <input id="sendName" placeholder="Receiver name">
-<input id="sendMobile" placeholder="Demo receiver number" maxlength="10">
+<input id="sendMobile" placeholder="Demo receiver number" maxlength="10" inputmode="numeric">
 <input id="sendAmount" type="number" min="1" placeholder="Amount ₹">
 <button onclick="sendMoney()">Send Demo Money</button>
 <button class="light" onclick="page('home')">Back</button>
@@ -120,19 +126,17 @@ nav button.active{color:#087e78}
 </div>
 </section>
 
-<!-- RECEIVE -->
 <section id="receive" class="hidden">
 <div class="card" style="text-align:center">
 <h2>Receive Money</h2>
-<div style="font-size:100px;color:#087e78">▦</div>
+<div class="qr"></div>
 <h3>Rupiyo Demo QR</h3>
 <p id="receiveName"></p>
-<p class="small">Illustrative QR placeholder. It cannot receive payments.</p>
+<p class="small">Decorative QR illustration. It cannot receive payments.</p>
 <button class="light" onclick="page('home')">Back</button>
 </div>
 </section>
 
-<!-- SCAN -->
 <section id="scan" class="hidden">
 <div class="card" style="text-align:center">
 <h2>Scan QR Code</h2>
@@ -142,28 +146,39 @@ nav button.active{color:#087e78}
 </div>
 </section>
 
-<!-- HISTORY -->
 <section id="history" class="hidden">
 <div class="card">
 <h2>Transaction History</h2>
-<div id="allHistory">No transactions yet.</div>
+<input id="searchHistory" placeholder="🔍 Search by name..." oninput="renderHistory()">
+<select id="historyFilter" onchange="renderHistory()">
+<option value="all">All Transactions</option>
+<option value="sent">Money Sent</option>
+</select>
+<div id="allHistory"></div>
 <button class="light" onclick="page('home')">Back</button>
 </div>
 </section>
 
-<!-- BANK -->
+<section id="notifications" class="hidden">
+<div class="card">
+<h2>🔔 Notifications</h2>
+<div class="notice">👋 Welcome to Rupiyo! Your demo wallet is ready.</div>
+<div class="notice">🔒 Your account is a local educational demo.</div>
+<div class="notice">💡 Explore the Send Money and History sections.</div>
+<button class="light" onclick="page('home')">Back</button>
+</div>
+</section>
+
 <section id="bank" class="hidden">
 <div class="card">
-<h2>Bank Accounts</h2>
-<div style="font-size:35px">🏦</div>
+<h2>🏦 Bank Accounts</h2>
 <p>Demo Bank Account</p>
 <p class="small">No real bank account is connected.</p>
-<button onclick="alert('Bank integration is not available in this demo.')">Add Demo Bank</button>
+<button onclick="alert('Real bank integration is not available.')">Add Demo Bank</button>
 <button class="light" onclick="page('home')">Back</button>
 </div>
 </section>
 
-<!-- CONTACTS -->
 <section id="contacts" class="hidden">
 <div class="card">
 <h2>Contacts</h2>
@@ -173,17 +188,15 @@ nav button.active{color:#087e78}
 </div>
 </section>
 
-<!-- REWARDS -->
 <section id="rewards" class="hidden">
 <div class="card">
-<h2>Rewards & Offers</h2>
-<p>🎁 Welcome to Rupiyo!</p>
-<p class="small">Demo rewards section. No real cashback is available.</p>
+<h2>🎁 Rewards & Offers</h2>
+<div class="notice">Welcome to Rupiyo!</div>
+<p class="small">Demo rewards only. No real cashback is available.</p>
 <button class="light" onclick="page('home')">Back</button>
 </div>
 </section>
 
-<!-- PROFILE -->
 <section id="profile" class="hidden">
 <div class="card">
 <h2>My Profile</h2>
@@ -196,18 +209,16 @@ nav button.active{color:#087e78}
 </div>
 </section>
 
-<!-- SETTINGS -->
 <section id="settings" class="hidden">
 <div class="card">
-<h2>Settings</h2>
+<h2>⚙ Settings</h2>
 <p>🔔 Notifications — Demo</p>
 <p>🔒 Security — Demo</p>
 <p>ℹ️ About Rupiyo</p>
-<p class="small">This is an educational wallet interface, not a financial service.</p>
+<p class="small">Educational wallet interface, not a financial service.</p>
 <button class="light" onclick="page('home')">Back</button>
 </div>
 </section>
-
 </main>
 
 <nav id="nav" class="hidden">
@@ -222,6 +233,22 @@ let user=null;
 let balance=5000;
 let transactions=[];
 
+function saveData(){
+try{
+localStorage.setItem('rupiyoDemo',JSON.stringify({user,balance,transactions}));
+}catch(e){}
+}
+function loadData(){
+try{
+let d=JSON.parse(localStorage.getItem('rupiyoDemo'));
+if(d&&d.user){
+user=d.user;
+balance=Number(d.balance)||5000;
+transactions=Array.isArray(d.transactions)?d.transactions:[];
+showDashboard();
+}
+}catch(e){}
+}
 function showRegister(){
 document.getElementById('login').classList.add('hidden');
 document.getElementById('register').classList.remove('hidden');
@@ -239,6 +266,9 @@ if(!name||!/^\d{10}$/.test(mobile)||!city||!/^\d{4}$/.test(pin)){
 alert('Please enter valid demo details.');return;
 }
 user={name,mobile,city,pin};
+balance=5000;
+transactions=[];
+saveData();
 showDashboard();
 }
 function login(){
@@ -257,10 +287,12 @@ document.getElementById('profileName').textContent=user.name;
 document.getElementById('profileMobile').textContent=user.mobile;
 document.getElementById('profileCity').textContent=user.city;
 document.getElementById('receiveName').textContent=user.name;
+updateBalance();
+renderHistory();
 page('home');
 }
 function page(id,btn){
-['home','send','receive','scan','history','bank','contacts','rewards','profile','settings'].forEach(x=>document.getElementById(x).classList.add('hidden'));
+['home','send','receive','scan','history','notifications','bank','contacts','rewards','profile','settings'].forEach(x=>document.getElementById(x).classList.add('hidden'));
 document.getElementById(id).classList.remove('hidden');
 document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
 if(btn)btn.classList.add('active');
@@ -278,6 +310,7 @@ alert('Enter valid demo details.');return;
 if(amount>balance){alert('Insufficient demo balance.');return;}
 balance-=amount;
 transactions.unshift({name,mobile,amount,date:new Date().toLocaleString()});
+saveData();
 updateBalance();
 renderHistory();
 document.getElementById('sendName').value='';
@@ -287,25 +320,35 @@ alert('Demo transfer successful!');
 page('home');
 }
 function renderHistory(){
-let html=transactions.length?transactions.map(t=>`
+let query=(document.getElementById('searchHistory')?.value||'').toLowerCase();
+let filter=document.getElementById('historyFilter')?.value||'all';
+let list=transactions.filter(t=>t.name.toLowerCase().includes(query));
+if(filter==='sent')list=list.filter(t=>t.amount>0);
+let html=list.length?list.map(t=>`
 <div class="item">
-<div class="row"><b>Sent to ${safe(t.name)}</b><span class="amount">-₹${t.amount.toLocaleString('en-IN')}</span></div>
+<div class="row"><b>Sent to ${safe(t.name)}</b><span class="amount">-₹${Number(t.amount).toLocaleString('en-IN')}</span></div>
 <div class="small">${safe(t.mobile)} · ${safe(t.date)}</div>
-</div>`).join(''):'No transactions yet.';
+</div>`).join(''):'<div class="empty">No matching transactions yet.</div>';
 document.getElementById('allHistory').innerHTML=html;
 document.getElementById('recent').innerHTML=transactions.slice(0,3).map(t=>`
-<div class="item row"><b>${safe(t.name)}</b><span class="amount">-₹${t.amount}</span></div>`).join('')||'No transactions yet.';
+<div class="item row"><b>${safe(t.name)}</b><span class="amount">-₹${Number(t.amount).toLocaleString('en-IN')}</span></div>`).join('')||'<div class="empty">No transactions yet.</div>';
 }
 function safe(s){
-let d=document.createElement('div');d.textContent=String(s);return d.innerHTML;
+let d=document.createElement('div');
+d.textContent=String(s);
+return d.innerHTML;
 }
 function logout(){
 user=null;
+balance=5000;
+transactions=[];
+localStorage.removeItem('rupiyoDemo');
 document.getElementById('nav').classList.add('hidden');
-['home','send','receive','scan','history','bank','contacts','rewards','profile','settings'].forEach(x=>document.getElementById(x).classList.add('hidden'));
+['home','send','receive','scan','history','notifications','bank','contacts','rewards','profile','settings'].forEach(x=>document.getElementById(x).classList.add('hidden'));
 showRegister();
 }
 updateBalance();
+loadData();
 </script>
 </body>
 </html>
